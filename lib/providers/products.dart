@@ -70,7 +70,7 @@ class Products with ChangeNotifier {
       }),
     )
         .then((response) {
-          print(json.decode(response.body));
+      print(json.decode(response.body));
       final newProduct = Product(
         title: product.title,
         description: product.description,
@@ -81,6 +81,9 @@ class Products with ChangeNotifier {
       _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw (error);
     });
   }
 
