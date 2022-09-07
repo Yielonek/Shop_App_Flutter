@@ -55,10 +55,10 @@ class Products with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     const url =
         'https://flutter-update-3c687-default-rtdb.europe-west1.firebasedatabase.app/products.json';
-    http
+    return http
         .post(
       url,
       body: json.encode({
