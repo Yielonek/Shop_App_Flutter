@@ -55,6 +55,17 @@ class Products with ChangeNotifier {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
+  Future<void> fetchAndSetProducts() async {
+    const url =
+        'https://flutter-update-3c687-default-rtdb.europe-west1.firebasedatabase.app/products.json';
+    try {
+      final response = await http.get(url);
+      print(json.decode(response.body));
+    } catch (error) {
+      throw (error);
+    }
+  }
+
   Future<void> addProduct(Product product) async {
     const url =
         'https://flutter-update-3c687-default-rtdb.europe-west1.firebasedatabase.app/products.json';
