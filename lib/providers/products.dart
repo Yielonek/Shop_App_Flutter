@@ -61,14 +61,15 @@ final String userId;
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString = filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =
-        'https://flutter-update-3c687-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$authToken';
+        'https://flutter-update-3c687-default-rtdb.europe-west1.firebasedatabase.app/products.json?auth=$authToken&$filterString';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       if (extractedData == null) {
-        return;
+        return; 
       }
        url =
         'https://flutter-update-3c687-default-rtdb.europe-west1.firebasedatabase.app/userFavorites/$userId.json?auth=$authToken';
@@ -103,6 +104,7 @@ final String userId;
           'description': product.description,
           'imageUrl': product.imageUrl,
           'price': product.price,
+          'creatorId' : userId,
         }),
       );
       final newProduct = Product(
