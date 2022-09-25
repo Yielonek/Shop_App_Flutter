@@ -59,7 +59,7 @@ class Auth with ChangeNotifier {
         ),
       );
       _autoLogout();
-      notifyListeners();
+      notifyListeners();   //   ?????
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode(
         {
@@ -102,7 +102,7 @@ class Auth with ChangeNotifier {
     return true;
   }
 
-  Future<void> logOut()async {
+  Future<void> logOut() async {
     _token = null;
     _userId = null;
     _expiryDate = null;
@@ -112,8 +112,8 @@ class Auth with ChangeNotifier {
     }
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
-     prefs.remove('userData');
-   // prefs.clear();
+    prefs.remove('userData');
+    // prefs.clear();
   }
 
   void _autoLogout() {
